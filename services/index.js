@@ -18,5 +18,8 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
+const productRoutes = require('./product/src/interfaces/product.routes');
+
+app.use('/products', productRoutes);
 
 exports.api = functions.https.onRequest(app);
