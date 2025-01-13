@@ -1,5 +1,6 @@
 const productRepository = require('../infrastructure/repositories/product.repository');
 const Product = require('../domain/Product');
+const { NotFoundError } = require('../../../shared/errors/CustomErrors');
 
 /**
  * Maps product data from the data source to Product domain entities.
@@ -33,4 +34,28 @@ const getProducts = async (limit = 10, startAfter = null) => {
     return { products, nextPageToken };
 };
 
-module.exports = { getProducts };
+/**
+ * Fetches products by their IDs and maps them to domain entities.
+ *
+ * @async
+ * @function fetchProductsByIds
+ * @param {string[]} productIds - Array of product IDs to fetch.
+ * @returns {Promise<Product[]>} A promise that resolves to an array of Product domain entities.
+ * @throws {NotFoundError} Throws an error if one or more product IDs are not found.
+ */
+const fetchProductsByIds = async (productIds) => {
+    // TODO: Implement interface for caching
+
+    const productData = await productRepository.fetchProductsByIds(productIds);
+
+    const fetchedIds = productData.map((data) => data.id);
+    const missingIds = productIds.filter((id) => !fetchedIds.includes(id));
+
+    if (missingIds.length > 0) {
+        throw new NotFoundError(`Products with the following IDs were not found: ${missingIds.join(', ')}`);
+    }
+
+    return mapProductsDataToEntities(productData);
+};
+
+module.exports = { fetchProductsByIds, getProducts };

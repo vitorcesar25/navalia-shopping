@@ -37,6 +37,41 @@ const getProducts = async (limit = 10, startAfter = null) => {
     }
 };
 
+
+/**
+ * Fetches product data by their IDs from Firestore.
+ * 
+ * This function retrieves product data for the specified product IDs, filters out non-existent documents,
+ * and maps the data into a consumable format. It uses Firestore's `getAll` method for efficient batch retrieval.
+ *
+ * @async
+ * @function fetchProductsByIds
+ * @param {string[]} productIds - An array of product IDs to fetch. If empty, the function returns an empty array.
+ * @returns {Promise<Array<{ id: string, [key: string]: any }>>} A promise that resolves to an array of product objects.
+ * Each object contains the product ID and its associated Firestore data.
+ * @throws {Error} Throws an error if fetching products from Firestore fails.
+ */
+const fetchProductsByIds = async (productIds) => {
+    if (!productIds || productIds.length === 0) {
+        return [];
+    }
+    try {
+        const productRefs = productIds.map((id) => firestore.collection('products').doc(id));
+
+        const productSnapshots = await firestore.getAll(...productRefs);
+
+        return productSnapshots
+            .filter((snapshot) => snapshot.exists)
+            .map((snapshot) => ({
+                id: snapshot.id,
+                ...snapshot.data(),
+            }));
+    } catch (error) {
+        throw new Error('Error fetching products:', error.message);
+    }
+};
+
 module.exports = {
+    fetchProductsByIds,
     getProducts
 };
