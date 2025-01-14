@@ -13,9 +13,9 @@ const seedData = async () => {
 
         // Seed Products
         const products = [
-            { id: 'prod-001', name: 'T-shirt', price: 35.99, priceInCents: 3599, photo: 'tshirt.jpg' },
-            { id: 'prod-002', name: 'Jeans', price: 65.50, priceInCents: 6550, photo: 'jeans.jpg' },
-            { id: 'prod-003', name: 'Dress', price: 80.75, priceInCents: 8075, photo: 'dress.jpg' },
+            { id: 'prod-001', name: 'T-shirt', price: 35.99, priceInCents: 3599, photo: 'https://images.pexels.com/photos/4440572/pexels-photo-4440572.jpeg' },
+            { id: 'prod-002', name: 'Jeans', price: 65.50, priceInCents: 6550, photo: 'https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg' },
+            { id: 'prod-003', name: 'Dress', price: 80.75, priceInCents: 8075, photo: 'https://images.pexels.com/photos/985635/pexels-photo-985635.jpeg' },
         ];
 
         for (const product of products) {
