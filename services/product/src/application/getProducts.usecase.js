@@ -11,7 +11,7 @@ const { NotFoundError } = require('../../../shared/errors/CustomErrors');
 const mapProductsDataToEntities = (products) => {
     return products.map(
         (data) =>
-            new Product(data.id, data.name, data.price, data.photo || '')
+            new Product(data.id, data.name, data.price, data.priceInCents, data.photo || '')
     );
 };
 

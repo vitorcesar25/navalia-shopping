@@ -8,9 +8,10 @@ class Product {
      * @param {string} id - The unique identifier for the product.
      * @param {string} name - The name of the product.
      * @param {number} price - The price of the product.
+     * @param {number} [priceInCents] - The price in cents of the product (optional).
      * @param {string} [photo] - The URL or path to the product's photo (optional).
      */
-    constructor(id, name, price, photo) {
+    constructor(id, name, price, priceInCents, photo) {
         /**
          * The unique identifier for the product.
          * @type {string}
@@ -34,7 +35,7 @@ class Product {
          * The price in cents of the product.
          * @type {number}
          */
-        this.priceInCents = price * 100;
+        this.priceInCents = priceInCents || price * 100;
 
         /**
          * The URL or path to the product's photo.
