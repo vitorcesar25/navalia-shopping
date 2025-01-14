@@ -31,7 +31,20 @@ const clearCartByUserId = async (userId) => {
     await cartRef.set({ items: [] }, { merge: true });
 };
 
+/**
+ * Saves the cart for a given user in the Firestore database.
+ * 
+ * @param {string} userId - The ID of the user.
+ * @param {Array} items - The list of cart items to save.
+ * @returns {Promise<void>}
+ */
+const saveCart = async (userId, items) => {
+    const cartRef = firestore.collection('carts').doc(userId);
+    await cartRef.set({ items }, { merge: true });
+};
+
 module.exports = {
     getCartByUserId,
-    clearCartByUserId
+    clearCartByUserId,
+    saveCart
 };

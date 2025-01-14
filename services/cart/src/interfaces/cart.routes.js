@@ -1,6 +1,6 @@
 const { Router } = require("express");
-const { getCartByUserId, clearCartByUserId } = require('./cart.controller');
-
+const { getCartByUserId, clearCartByUserId, updateCartItem } = require('./cart.controller');
+const { updateCartItemValidations } = require('./cart.validations');
 const errorHandlerMiddleware = require('../../../shared/middlewares/errorHandlerMiddleware');
 const authenticationMiddleware = require('../../../shared/middlewares/authenticationMiddleware');
 const requestVerificationMiddleware = require('../../../shared/middlewares/requestVerificationMiddleware');
@@ -24,4 +24,11 @@ router.get('/', authenticationMiddleware, errorHandlerMiddleware(getCartByUserId
  */
 router.delete('/', authenticationMiddleware, errorHandlerMiddleware(clearCartByUserId));
 
+/**
+ * PATCH /carts/items
+ * Updates the quantity of an item in the cart, add it if it doesn't exist or remove it from cart.
+ */
+router.patch('/items', authenticationMiddleware, requestVerificationMiddleware(updateCartItemValidations), errorHandlerMiddleware(updateCartItem))
+
 module.exports = router;
+
