@@ -27,7 +27,6 @@ const mapProductsDataToEntities = (products) => {
  * @throws {Error} Throws an error if the repository fails to fetch products.
  */
 const getProducts = async (limit = 10, startAfter = null) => {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
     const productData = await productRepository.getProducts(limit, startAfter);
     const products = mapProductsDataToEntities(productData);
     const nextPageToken = products.length === limit ? products[products.length - 1].id : null;
