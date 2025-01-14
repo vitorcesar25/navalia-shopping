@@ -1,0 +1,41 @@
+# This file deploys Firebase Functions when changes are merged into the master branch
+
+name: Deploy Firebase Functions on merge
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build_and_deploy_functions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        working-directory: ./services
+        run: npm install
+
+      - name: Lint functions
+        working-directory: ./services
+        run: npm run lint
+
+      - name: Build functions
+        working-directory: ./services
+        run: npm run build
+
+      - name: Deploy Firebase Functions
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NAVALIA_SHOPPING }}
+          projectId: navalia-shopping
+        env:
+          FIREBASE_DEPLOY_TARGET: functions
