@@ -1,4 +1,4 @@
-const { NotFoundError } = require('../../../shared/errors/CustomErrors');
+const { NotFoundError, UnprocessableEntityError } = require('../../../shared/errors/CustomErrors');
 
 /**
  * Represents an item in the shopping cart.
@@ -47,6 +47,12 @@ class CartItem {
      * @param {number} quantity - The quantity of the product in the cart.
      */
     constructor(productId, quantity) {
+        if (!productId || typeof productId !== 'string') {
+            throw new UnprocessableEntityError('Product ID must be a non-empty string');
+        }
+        if (quantity <= 0) {
+            throw new UnprocessableEntityError('Quantity must be a positive number');
+        }
         this.productId = productId;
         this.quantity = quantity;
     }
