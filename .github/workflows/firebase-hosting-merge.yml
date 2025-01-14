@@ -23,8 +23,14 @@ jobs:
         working-directory: ./frontend # Specify the frontend folder
         run: npm install
 
+      - name: Inject environment variables
+        working-directory: ./frontend # Specify the frontend folder
+        run: echo "VUE_APP_API_BASE_URL=${{ secrets.VUE_APP_API_BASE_URL }}" >> .env
+
       - name: Build application
         working-directory: ./frontend # Specify the frontend folder
+        env:
+          VUE_APP_API_BASE_URL: ${{ secrets.VUE_APP_API_BASE_URL }}
         run: npm run build
 
       - name: Deploy to Firebase Hosting
