@@ -248,6 +248,11 @@ firebase deploy --only functions
 
 - For monitoring and debugging, Firebase Functions are integrated with Google Cloud Logging, providing real-time visibility into application performance and errors. The `/services/shared/utils/logger.js` file is used to streamline logging across the backend, making it easy to capture and trace logs within the Google Cloud Platform (GCP) dashboard. This setup enhances observability and simplifies incident resolution, ensuring a reliable and scalable backend infrastructure.
 
+![Logging Console](function_logging.png)
+
+![API Metrics (No data for the exercise)](api_metrics.png)
+
+
 ### 3.5 Future Enhancements
 
 1. **Current Architecture with Firebase Functions**  
