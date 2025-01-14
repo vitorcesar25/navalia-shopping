@@ -18,14 +18,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18' # Adjust based on your Node.js version
 
       - name: Install dependencies
-        working-directory: ./frontend
+        working-directory: ./frontend # Specify the frontend folder
         run: npm install
 
       - name: Build application
-        working-directory: ./frontend
+        working-directory: ./frontend # Specify the frontend folder
         run: npm run build
 
       - name: Deploy to Firebase Hosting
@@ -34,4 +34,3 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NAVALIA_SHOPPING }}
           projectId: navalia-shopping
-        working-directory: ./frontend
