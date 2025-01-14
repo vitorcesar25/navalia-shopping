@@ -19,6 +19,19 @@ const getCartByUserId = async (userId) => {
     return doc.data();
 }
 
+/**
+ * Clears the shopping cart for a given user in the Firestore database.
+ *
+ * @param {string} userId - The ID of the user whose cart will be cleared.
+ * @returns {Promise<void>} Resolves when the cart is successfully cleared.
+ */
+const clearCartByUserId = async (userId) => {
+    const cartRef = firestore.collection('carts').doc(userId);
+
+    await cartRef.set({ items: [] }, { merge: true });
+};
+
 module.exports = {
-    getCartByUserId
+    getCartByUserId,
+    clearCartByUserId
 };
