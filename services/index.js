@@ -3,7 +3,7 @@ const express = require("express");
 const admin = require("firebase-admin");
 const cors = require("cors");
 require("dotenv").config();
-
+const { seedFirestore } = require("./shared/utils/seedFirestore");
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -25,5 +25,7 @@ const promotionRoutes = require("./promotion/src/interfaces/promotion.routes");
 app.use("/products", productRoutes);
 app.use("/carts", cartRoutes);
 app.use("/promotions", promotionRoutes);
+
+seedFirestore();
 
 exports.api = functions.https.onRequest(app);

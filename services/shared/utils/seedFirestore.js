@@ -1,19 +1,8 @@
 const firestore = require("../configs/firestore.config");
 
-const seedData = async () => {
+const seedFirestore = async () => {
   try {
     console.log("Starting Firestore seeding...");
-
-    // Seed Cart
-    console.log("Seeding cart...");
-    const cartRef = firestore.collection("carts").doc("user1");
-    await cartRef.set({
-      items: [
-        {productId: "prod-001", quantity: 2},
-        {productId: "prod-002", quantity: 1},
-      ],
-    });
-    console.log("Cart seeded.");
 
     // Seed Products
     console.log("Seeding products...");
@@ -43,7 +32,7 @@ const seedData = async () => {
 
     for (const product of products) {
       const productRef = firestore.collection("products").doc(product.id);
-      await productRef.set({...product});
+      await productRef.set({ ...product });
       console.log(`Product ${product.id} seeded.`);
     }
 
@@ -55,7 +44,7 @@ const seedData = async () => {
         name: "VIP Discount (15%)",
         active: true,
         type: "percentage",
-        customConfig: {percentage: 15},
+        customConfig: { percentage: 15 },
         vipOnly: true,
       },
       {
@@ -63,14 +52,14 @@ const seedData = async () => {
         active: true,
         name: "Get 3 for the Price of 2",
         type: "buy-x-pay-y",
-        customConfig: {buy: 3, pay: 2},
+        customConfig: { buy: 3, pay: 2 },
         vipOnly: false,
       },
     ];
 
     for (const promotion of promotions) {
       const promoRef = firestore.collection("promotions").doc(promotion.id);
-      await promoRef.set({...promotion});
+      await promoRef.set({ ...promotion });
       console.log(`Promotion ${promotion.id} seeded.`);
     }
 
@@ -80,12 +69,4 @@ const seedData = async () => {
   }
 };
 
-seedData()
-    .then(() => {
-      console.log("Seeding process completed.");
-      process.exit(0);
-    })
-    .catch((error) => {
-      console.error("Seeding process failed:", error);
-      process.exit(1);
-    });
+module.exports = { seedFirestore };
