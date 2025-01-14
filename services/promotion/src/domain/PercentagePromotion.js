@@ -1,4 +1,5 @@
 const Promotion = require('./Promotion');
+const { UnprocessableEntityError } = require('../../../shared/errors/CustomErrors');
 
 /**
  * Represents a percentage-based promotion.
@@ -15,8 +16,10 @@ class PercentagePromotion extends Promotion {
      */
     constructor(id, name, vipOnly, customConfig) {
         super(id, name, 'percentage', vipOnly);
-        const { percentage } = customConfig;
-        this.percentage = percentage;
+        if (!customConfig?.percentage || customConfig.percentage <= 0 || customConfig.percentage > 100) {
+            throw new UnprocessableEntityError('Percentage is required for percentage-based promotions');
+        }
+        this.percentage = customConfig.percentage;
     }
 
     /**
