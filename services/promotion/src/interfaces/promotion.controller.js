@@ -1,4 +1,4 @@
-const { calculatePromotions } = require('../application/calculatePromotions.usecase');
+const {calculatePromotions} = require("../application/calculatePromotions.usecase");
 
 /**
  * Controller for calculating promotions for a user's cart.
@@ -9,13 +9,13 @@ const { calculatePromotions } = require('../application/calculatePromotions.usec
  * @param {Object} res - The HTTP response object.
  */
 exports.calculatePromotions = async (req, res) => {
-    const { cartItems } = req.body;
-    const isVip = req.user.isVip;
+  const {cartItems} = req.body;
+  const isVip = req.user.isVip;
 
-    const result = await calculatePromotions(cartItems, isVip);
-    
-    res.status(200).json({
-        message: 'Promotions calculated successfully',
-        data: result,
-    });
+  const result = await calculatePromotions(cartItems, isVip);
+
+  res.status(200).json({
+    message: "Promotions calculated successfully",
+    data: result,
+  });
 };
