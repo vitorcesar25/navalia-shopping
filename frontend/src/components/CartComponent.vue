@@ -9,19 +9,21 @@
       <v-toolbar flat color="primary">
         <v-toolbar-title class="white--text">Your Cart</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon @click="toggleCartDialog">
+        <v-btn data-testid="cart-close-button" icon @click="toggleCartDialog">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
       <v-divider></v-divider>
 
       <v-container v-if="!hasCartItems">
-        <p class="text-center">Your cart is empty.</p>
+        <p class="text-center" data-testid="cart-empty-message">
+          Your cart is empty.
+        </p>
       </v-container>
       <v-container v-else>
         <v-row>
           <v-col cols="12" v-for="item in getCartItems" :key="item.productId">
-            <v-card outlined height="140px">
+            <v-card outlined height="140px" :data-testid="`cart-item-${item.productId}`">
               <v-row>
                 <v-col cols="4">
                   <v-img :src="item.photo" height="80px" contain></v-img>
@@ -38,6 +40,7 @@
                 <v-col cols="12" class="ma-0 pa-0">
                   <v-row class="ma-0 px-8" justify="end">
                     <v-btn
+                      data-testid="increase-quantity"
                       size="24px"
                       class="mr-2"
                       color="primary"
@@ -49,6 +52,7 @@
                       <v-icon size="18px">mdi-plus</v-icon>
                     </v-btn>
                     <v-btn
+                      data-testid="decrease-quantity"
                       size="24px"
                       color="primary"
                       class="mr-2"
@@ -63,6 +67,7 @@
                     <v-btn
                       size="24px"
                       color="red"
+                      data-testid="remove-item"
                       icon
                       @click.stop="removeItem(item.productId)"
                     >
@@ -74,7 +79,7 @@
             </v-card>
           </v-col>
           <v-col cols="12">
-            <p>Total: {{ formatNumberToDollar(getCartTotal) }}</p>
+            <p data-testid="cart-total">Total: {{ formatNumberToDollar(getCartTotal) }}</p>
           </v-col>
         </v-row>
       </v-container>
@@ -83,7 +88,7 @@
         <PromotionComponent />
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn color="red" dark @click.stop="clearCart"> Clear Cart </v-btn>
+          <v-btn color="red" dark @click.stop="clearCart" data-testid="cart-clear-button"> Clear Cart </v-btn>
           <v-spacer></v-spacer>
           <v-btn color="primary" dark @click.stop="continueFromCart">
             Checkout

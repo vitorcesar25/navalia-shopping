@@ -1,42 +1,59 @@
 <template>
-  <v-container v-if="promotions && promotions.length && !promotionLoading">
-    <p class="mb-4">Promotional Offers:</p>
-    <v-card
-      @click="selectPromotion(promotion.id)"
-      v-for="promotion in promotions"
-      :key="promotion.id"
-      small
-      class="mb-2"
-      :color="selectedPromotion === promotion.id ? 'primary' : 'white'"
-    >
-      <v-radio-group v-model="selectedPromotion" hide-details>
-        <v-radio :value="promotion.id"></v-radio>
-      </v-radio-group>
-      <v-card-title>
-        {{ promotion.name }}
-      </v-card-title>
-      <v-chip
-        v-if="promotion.id === bestOfferId"
-        class="ml-2"
-        :color="selectedPromotion === promotion.id ? 'white' : 'green'"
-        label
+  <v-container>
+    <div v-show="promotions && promotions.length && !promotionLoading">
+      <p class="mb-4">Promotional Offers:</p>
+      <v-card
+        data-testid="promotion-card"
+        @click="selectPromotion(promotion.id)"
+        v-for="promotion in promotions"
+        :key="promotion.id"
+        small
+        class="mb-2"
+        :color="selectedPromotion === promotion.id ? 'primary' : 'white'"
       >
-        Recommended
-      </v-chip>
-      <v-card-text>
-        <p v-if="promotion.total !== promotion.subtotal">
-          <del class="grey--text">{{ formatNumberToDollar(promotion.total) }}</del>
-          <strong class="ml-2 text-h6">{{ formatNumberToDollar(promotion.subtotal) }}</strong>
-        </p>
-        <p v-else>
-          <strong>{{ formatNumberToDollar(promotion.subtotal) }}</strong>
-        </p>
-      </v-card-text>
-    </v-card>
-  </v-container>
-  <v-container v-else-if="promotionLoading">
-    <v-row justify="center">
-      <v-progress-circular indeterminate color="primary" class="my-4"></v-progress-circular>
+        <v-radio-group v-model="selectedPromotion" hide-details>
+          <v-radio :value="promotion.id"></v-radio>
+        </v-radio-group>
+        <v-card-title>
+          {{ promotion.name }}
+        </v-card-title>
+        <v-chip
+          v-if="promotion.id === bestOfferId"
+          class="ml-2"
+          :color="selectedPromotion === promotion.id ? 'white' : 'green'"
+          label
+          data-testid="promotion-recommended"
+        >
+          Recommended
+        </v-chip>
+        <v-card-text>
+          <p v-if="promotion.total !== promotion.subtotal">
+            <del class="grey--text">{{
+              formatNumberToDollar(promotion.total)
+            }}</del>
+            <strong
+              class="ml-2 text-h6"
+              :data-testid="
+                promotion.id === bestOfferId
+                  ? 'promotion-recommended-pricing'
+                  : 'promotion-final-pricing'
+              "
+              >{{ formatNumberToDollar(promotion.subtotal) }}</strong
+            >
+          </p>
+          <p v-else>
+            <strong>{{ formatNumberToDollar(promotion.subtotal) }}</strong>
+          </p>
+        </v-card-text>
+      </v-card>
+    </div>
+
+    <v-row justify="center" v-if="promotionLoading">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+        class="my-4"
+      ></v-progress-circular>
     </v-row>
   </v-container>
 </template>

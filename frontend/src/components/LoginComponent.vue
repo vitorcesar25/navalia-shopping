@@ -1,7 +1,19 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="400px">
+  <v-dialog
+    v-model="dialog"
+    persistent
+    max-width="400px"
+    data-testid="login-dialog"
+  >
     <template v-slot:activator="{ props }">
-      <v-btn color="primary" dark v-bind="props" @click="openDialog" rounded>
+      <v-btn
+        data-testid="login-button"
+        color="primary"
+        dark
+        v-bind="props"
+        @click="openDialog"
+        rounded
+      >
         <v-icon left class="mr-2">mdi-account</v-icon>
         {{ loginButtonLabel }}
       </v-btn>
@@ -10,6 +22,7 @@
       <v-card-title class="text-h6">Select User</v-card-title>
       <v-card-text>
         <v-select
+          data-testid="user-selection"
           v-model="selectedUser"
           :items="users"
           item-title="name"
@@ -21,7 +34,12 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" @click="loginUser" :disabled="!selectedUser">
+        <v-btn
+          data-testid="confirm-login"
+          color="primary"
+          @click="loginUser"
+          :disabled="!selectedUser"
+        >
           Select
         </v-btn>
       </v-card-actions>
