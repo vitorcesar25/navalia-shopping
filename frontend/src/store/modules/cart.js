@@ -58,6 +58,7 @@ const actions = {
      */
     async addToCart({ dispatch, state, commit }, { productId }) {
         try {
+            commit('setLoading', true, { root: true });
             const cartItem = state.cart.items.find((item) => item.productId === productId);
             const quantity = cartItem ? cartItem.quantity + 1 : 1;
             await dispatch('updateCartItem', { productId, quantity });
@@ -65,6 +66,8 @@ const actions = {
         } catch (err) {
             console.error('Error adding item to cart:', err.message);
             alert('Unable to add item to your cart. Please try again later.');
+        } finally {
+            commit('setLoading', false, { root: true });
         }
     },
 
@@ -84,6 +87,7 @@ const actions = {
      */
     async updateCartItem({ commit, dispatch }, { productId, quantity }) {
         try {
+            commit('setLoading', true, { root: true });
             if (quantity !== 0 || confirm('Are you sure you want to remove this item from your cart?')) {
                 await cartServices.updateCartItem(productId, quantity);
                 await dispatch('getCartByUserId');
@@ -91,6 +95,8 @@ const actions = {
         } catch (err) {
             console.error('Error updating cart item:', err.message);
             alert('Unable to update cart item. Please try again later.');
+        } finally {
+            commit('setLoading', false, { root: true });
         }
     },
 
@@ -100,6 +106,7 @@ const actions = {
      */
     async clearCart({ commit }) {
         try {
+            commit('setLoading', true, { root: true });
             if (confirm('Are you sure you want to clear your cart?')) {
                 const response = await cartServices.clearCartByUserId();
                 commit('setCart', response.data);
@@ -107,6 +114,8 @@ const actions = {
         } catch (err) {
             console.error('Error clearing cart:', err.message);
             alert('Unable to clear your cart. Please try again later.');
+        }finally{
+            commit('setLoading', false, { root: true });
         }
     },
 
