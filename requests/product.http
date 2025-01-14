@@ -1,0 +1,20 @@
+@baseUrl = http://127.0.0.1:5001/navalia-shopping/us-central1/api/products
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyMSIsImlzVmlwIjp0cnVlfQ.IcNtPaxe5sYRd1SoJfz20ZiJ38A0fSg_afzNafHfWe8
+
+# GET with Authorization
+GET {{baseUrl}}?limit=2&startAfter=prod-001
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+###
+
+# POST with Authorization
+POST {{baseUrl}}/batch
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+    "productIds": [
+        "prod-001"
+    ]
+}

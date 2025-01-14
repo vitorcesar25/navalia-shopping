@@ -1,0 +1,28 @@
+@baseUrl = http://127.0.0.1:5001/navalia-shopping/us-central1/api/promotions
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyMSIsImlzVmlwIjp0cnVlfQ.IcNtPaxe5sYRd1SoJfz20ZiJ38A0fSg_afzNafHfWe8
+
+
+# Calculate Promotions for a Cart
+POST {{baseUrl}}/calculate
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "cartItems": [
+    {
+      "productId": "prod-001",
+      "price": 35.99,
+      "quantity": 2
+    },
+    {
+      "productId": "prod-002",
+      "price": 65.50,
+      "quantity": 1
+    },
+    {
+      "productId": "prod-003",
+      "price": 80.75,
+      "quantity": 1
+    }
+  ]
+}

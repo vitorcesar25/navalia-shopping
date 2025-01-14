@@ -1,0 +1,23 @@
+@baseUrl = http://127.0.0.1:5001/navalia-shopping/us-central1/api/carts
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyMSIsImlzVmlwIjp0cnVlfQ.IcNtPaxe5sYRd1SoJfz20ZiJ38A0fSg_afzNafHfWe8
+
+# GET with Authorization
+GET {{baseUrl}}
+Authorization: Bearer {{jwt}}
+###
+
+# DELETE with Authorization
+DELETE {{baseUrl}}
+Authorization: Bearer {{jwt}}
+
+###
+
+# PATCH with Authorization
+PATCH {{baseUrl}}/items
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "productId": "prod-001",
+  "quantity": 1
+}
