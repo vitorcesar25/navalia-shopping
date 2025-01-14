@@ -8,7 +8,7 @@
 
     <v-row>
       <v-col cols="12" md="4" v-for="product in products" :key="product.id">
-        <v-card>
+        <v-card data-testid="cart-total">
           <v-img :src="product.photo" height="200px" class="align-end" cover>
             <v-card-subtitle class="bg-white text-black">
               {{ product.name }}
@@ -19,6 +19,8 @@
           </v-card-text>
           <v-card-actions>
             <v-btn
+              :data-testid="`add-to-cart-${product.id}`"
+              :id="product.id"
               color="primary"
               @click="addToCart({ productId: product.id })"
             >
@@ -40,7 +42,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
   name: "ProductList",
@@ -57,7 +59,7 @@ export default {
 
   computed: {
     ...mapState("product", ["productPageData"]),
-    ...mapState("user", ["user"]),
+    ...mapGetters("user", ["getUser"]),
     products() {
       return this.productPageData[this.pageIndex - 1]?.products || [];
     },
@@ -114,9 +116,9 @@ export default {
     /**
      * Watches for changes in the `user` and fetches products if necessary.
      */
-    user: {
-      handler() {
-        if (this.productPageData?.length === 0 && this.user) {
+    getUser: {
+      handler(user) {
+        if (this.productPageData?.length === 0 && user) {
           this.getProductsAsync(this.pageIndex);
         }
       },
@@ -137,7 +139,7 @@ export default {
    * Lifecycle hook to fetch initial product data on component creation.
    */
   async created() {
-    if (this.productPageData?.length === 0 && this.user) {
+    if (this.productPageData?.length === 0 && this.getUser) {
       await this.getProductsAsync(this.pageIndex);
     }
   },

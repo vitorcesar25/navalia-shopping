@@ -1,5 +1,11 @@
 <template>
-  <v-btn icon color="primary" @click="toggleCartDialog" title="Open Cart">
+  <v-btn
+    data-testid="open-cart-button"
+    icon
+    color="primary"
+    @click="toggleCartDialog"
+    title="Open Cart"
+  >
     <v-icon>mdi-cart</v-icon>
   </v-btn>
 </template>
