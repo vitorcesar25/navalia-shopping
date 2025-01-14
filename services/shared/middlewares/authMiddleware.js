@@ -17,7 +17,7 @@ const unauthorizedResponseFormater = (req, res, error) => {
  *
  * @return {Object} 401 response if authentication fails.
  */
-const authenticationMiddleware = (req, res, next) => {
+const authMiddleware = (req, res, next) => {
   try {
     const authHeader = req.headers["authorization"];
 
@@ -41,4 +41,4 @@ const authenticationMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = authenticationMiddleware;
+module.exports = authMiddleware;

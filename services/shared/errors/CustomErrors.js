@@ -79,6 +79,9 @@ class InternalServerError extends CustomError {
  * Represents an "Unprocessable Entity" error (HTTP 422).
  */
 class UnprocessableEntityError extends CustomError {
+  /**
+   * @param {string} [message='Unprocessable Entity Error'] - The error message.
+   */
   constructor(message = "Unprocessable Entity") {
     super(message, 422, "warn");
   }

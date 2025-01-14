@@ -1,6 +1,5 @@
 const PercentagePromotion = require("../PercentagePromotion");
 const {UnprocessableEntityError} = require("../../../../shared/errors/CustomErrors");
-const Promotion = require("../Promotion");
 
 // Mock dependencies
 jest.mock("../../../../shared/errors/CustomErrors", () => ({

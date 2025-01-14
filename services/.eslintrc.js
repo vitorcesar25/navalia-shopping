@@ -4,7 +4,7 @@ module.exports = {
     node: true,
   },
   parserOptions: {
-    "ecmaVersion": 2018,
+    ecmaVersion: 2018,
   },
   extends: [
     "eslint:recommended",
@@ -13,13 +13,15 @@ module.exports = {
   rules: {
     "no-restricted-globals": ["error", "name", "length"],
     "prefer-arrow-callback": "error",
-    "quotes": ["error", "double", {"allowTemplateLiterals": true}],
+    "quotes": ["error", "double", {allowTemplateLiterals: true}],
+    "max-len": ["error", {code: 180}],
+    "new-cap": ["error", {"capIsNewExceptions": ["Router"]}],
   },
   overrides: [
     {
-      files: ["**/*.spec.*"],
+      files: ["**/*.spec.*", "**/*.test.*"], // Jest test file patterns
       env: {
-        mocha: true,
+        jest: true, // Add Jest environment
       },
       rules: {},
     },

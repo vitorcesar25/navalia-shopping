@@ -3,12 +3,12 @@ const CartItem = require('./CartItem');
 /**
  * Represents a shopping cart.
  */
+// eslint-disable-next-line no-unused-vars
 class Cart {
     /**
-     * @type {string} The unique identifier of the user owning the cart.
-     * @private
+     * @type {string} The identifier of the user owning the cart.
      */
-    #userId;
+    userId;
 
     /**
      * @type {CartItem[]} The list of items in the cart.
@@ -30,7 +30,7 @@ class Cart {
      * @param {Array<{ productId: string, quantity: number }>} items - The initial items in the cart.
      */
     constructor(userId, items = []) {
-        this.#userId = userId;
+        this.userId = userId;
         this.items = items.map((item) => new CartItem(item.productId, item.quantity));
     }
 
@@ -64,7 +64,7 @@ class Cart {
      * @returns {string} The user ID.
      */
     getUserId() {
-        return this.#userId;
+        return this.userId;
     }
 
 

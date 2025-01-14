@@ -18,12 +18,15 @@ const mapProductsDataToEntities = (products) => {
 /**
  * Fetches products with pagination support and maps them to domain entities.
  *
+ * @typedef {Object} PaginatedProducts
+ * @property {Product[]} products - The array of product entities.
+ * @property {string|null} nextPageToken - The next page token.
+ *
  * @async
  * @function getProducts
- * @param {number} [limit=10] - The maximum number of products to fetch.
- * @param {string|null} [startAfter=null] - The ID of the last product from the previous page for pagination.
- * @returns {Promise<{ products: Product[], nextPageToken: string|null }>}
- *          A promise that resolves to an object containing the array of Product domain entities and a next page token.
+ * @param {number} [limit] - The maximum number of products to fetch. Defaults to 10.
+ * @param {string|null} [startAfter] - The ID of the last product from the previous page for pagination. Defaults to null.
+ * @return {Promise<PaginatedProducts>} A promise resolving to paginated products and a next page token.
  * @throws {Error} Throws an error if the repository fails to fetch products.
  */
 const getProducts = async (limit = 10, startAfter = null) => {
