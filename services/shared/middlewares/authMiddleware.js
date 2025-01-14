@@ -30,7 +30,7 @@ const authMiddleware = (req, res, next) => {
     if (!token) {
       throw new UnauthorizedError("Token is missing.");
     }
-    const secretKey = process.env.JWT_SECRET;
+    const secretKey = process.env.JWT_SECRET || 'navalia-shopping';
     const decoded = jwt.verify(token, secretKey);
 
     req.user = decoded;
