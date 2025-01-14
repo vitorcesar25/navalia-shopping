@@ -32,7 +32,6 @@ class Cart {
     constructor(userId, items = []) {
         this.#userId = userId;
         this.items = items.map((item) => new CartItem(item.productId, item.quantity));
-        this.calculateTotal();
     }
 
     /**
@@ -52,15 +51,11 @@ class Cart {
      * @returns {number} The total cost of all items in the cart, formatted to two decimal places.
      */
     calculateTotal() {
-        // Calculate total in cents to avoid floating-point errors
         this.totalInCents = this.items.reduce(
-            (total, item) => total + Math.round((item.priceInCents || 0)) * item.quantity,
+            (total, item) => total + item.priceInCents * item.quantity,
             0
         );
-
-        // Convert back to dollars with two decimal places
-        this.total = this.totalInCents / 100;
-
+        this.total = Number((this.totalInCents / 100).toFixed(2));
         return this.total;
     }
 

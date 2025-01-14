@@ -75,6 +75,15 @@ class InternalServerError extends CustomError {
     }
 }
 
+/**
+ * Represents an "Unprocessable Entity" error (HTTP 422).
+ */
+class UnprocessableEntityError extends CustomError {
+    constructor(message = 'Unprocessable Entity') {
+        super(message, 422, 'warn');
+    }
+}
+
 module.exports = {
     CustomError,
     BadRequestError,
@@ -82,4 +91,5 @@ module.exports = {
     NotFoundError,
     ConflictError,
     InternalServerError,
+    UnprocessableEntityError
 };

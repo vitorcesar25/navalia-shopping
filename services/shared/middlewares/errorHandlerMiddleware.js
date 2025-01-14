@@ -16,7 +16,7 @@ const errorHandlerMiddleware = (fn) => {
         } catch (error) {
             logError(req, error);
             if (error instanceof CustomError) {
-                res.status(error.statusCode).json({ error: error.message });
+                res.status(error.statusCode).json({ message: error.message });
             } else {
                 res.status(500).json({ error: "Internal server error" });
             }

@@ -11,7 +11,7 @@ const { NotFoundError } = require('../../../shared/errors/CustomErrors');
 const mapProductsDataToEntities = (products) => {
     return products.map(
         (data) =>
-            new Product(data.id, data.name, data.price, data.photo || '')
+            new Product(data.id, data.name, data.price, data.priceInCents, data.photo || '')
     );
 };
 
@@ -27,7 +27,6 @@ const mapProductsDataToEntities = (products) => {
  * @throws {Error} Throws an error if the repository fails to fetch products.
  */
 const getProducts = async (limit = 10, startAfter = null) => {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
     const productData = await productRepository.getProducts(limit, startAfter);
     const products = mapProductsDataToEntities(productData);
     const nextPageToken = products.length === limit ? products[products.length - 1].id : null;
@@ -44,8 +43,6 @@ const getProducts = async (limit = 10, startAfter = null) => {
  * @throws {NotFoundError} Throws an error if one or more product IDs are not found.
  */
 const fetchProductsByIds = async (productIds) => {
-    // TODO: Implement interface for caching
-
     const productData = await productRepository.fetchProductsByIds(productIds);
 
     const fetchedIds = productData.map((data) => data.id);

@@ -58,6 +58,7 @@ const actions = {
      */
     async addToCart({ dispatch, state, commit }, { productId }) {
         try {
+            commit('setLoading', true, { root: true });
             const cartItem = state.cart.items.find((item) => item.productId === productId);
             const quantity = cartItem ? cartItem.quantity + 1 : 1;
             await dispatch('updateCartItem', { productId, quantity });
@@ -65,6 +66,8 @@ const actions = {
         } catch (err) {
             console.error('Error adding item to cart:', err.message);
             alert('Unable to add item to your cart. Please try again later.');
+        } finally {
+            commit('setLoading', false, { root: true });
         }
     },
 
@@ -82,17 +85,35 @@ const actions = {
      * @param {Object} context - Vuex action context.
      * @param {Object} payload - Payload containing productId and quantity.
      */
-    async updateCartItem({ commit, dispatch }, { productId, quantity }) {
+    async updateCartItem({ commit, dispatch, rootGetters }, { productId, quantity }) {
         try {
-            if (quantity !== 0 || confirm('Are you sure you want to remove this item from your cart?')) {
-                await cartServices.updateCartItem(productId, quantity);
-                await dispatch('getCartByUserId');
+            commit('setLoading', true, { root: true });
+            const cartItems = rootGetters['cart/getCartItems'];
+            const isItemAlreadyInCart = cartItems.find(item => item.productId === productId);
+            if (cartItems.length === 10 && !isItemAlreadyInCart) {
+                alert('Cart cannot have more than 10 unique items.');
+                return;
             }
+
+            if (quantity < 0) {
+                alert('Quantity cannot be negative.');
+                return;
+            }
+
+            if (quantity === 0 && !confirm('Are you sure you want to remove this item from your cart?')) {
+                return;
+            }
+
+            await cartServices.updateCartItem(productId, quantity);
+            await dispatch('getCartByUserId');
         } catch (err) {
             console.error('Error updating cart item:', err.message);
             alert('Unable to update cart item. Please try again later.');
+        } finally {
+            commit('setLoading', false, { root: true });
         }
     },
+
 
     /**
      * Clears all items from the cart.
@@ -100,6 +121,7 @@ const actions = {
      */
     async clearCart({ commit }) {
         try {
+            commit('setLoading', true, { root: true });
             if (confirm('Are you sure you want to clear your cart?')) {
                 const response = await cartServices.clearCartByUserId();
                 commit('setCart', response.data);
@@ -107,6 +129,8 @@ const actions = {
         } catch (err) {
             console.error('Error clearing cart:', err.message);
             alert('Unable to clear your cart. Please try again later.');
+        } finally {
+            commit('setLoading', false, { root: true });
         }
     },
 

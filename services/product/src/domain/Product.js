@@ -1,60 +1,34 @@
-/**
- * Represents a product in the system.
- */
+const { UnprocessableEntityError } = require('../../../shared/errors/CustomErrors');
+
 class Product {
-    /**
-     * Creates a new Product instance.
-     * 
-     * @param {string} id - The unique identifier for the product.
-     * @param {string} name - The name of the product.
-     * @param {number} price - The price of the product.
-     * @param {string} [photo] - The URL or path to the product's photo (optional).
-     */
-    constructor(id, name, price, photo) {
-        /**
-         * The unique identifier for the product.
-         * @type {string}
-         */
+    constructor(id, name, price, priceInCents, photo) {
+        if (!id || typeof id !== 'string') {
+            throw new UnprocessableEntityError('Product ID must be a non-empty string');
+        }
+        if (!name || typeof name !== 'string') {
+            throw new UnprocessableEntityError('Product name must be a non-empty string');
+        }
+        if (price < 0) {
+            throw new UnprocessableEntityError('Price cannot be negative');
+        }
+        if (priceInCents && priceInCents !== Math.round(price * 100)) {
+            throw new UnprocessableEntityError('Inconsistent price and priceInCents values');
+        }
+
         this.id = id;
-
-        /**
-         * The name of the product.
-         * @type {string}
-         */
         this.name = name;
-
-        /**
-         * The price of the product.
-         * @type {number}
-         */
         this.price = price;
-
-
-        /**
-         * The price in cents of the product.
-         * @type {number}
-         */
-        this.priceInCents = price * 100;
-
-        /**
-         * The URL or path to the product's photo.
-         * @type {string}
-         */
-        this.photo = photo;
+        this.priceInCents = priceInCents ?? Math.round(price * 100);
+        this.photo = photo || '';
     }
 
-    /**
-     * Serializes the Product instance to a plain object with basic properties.
-     *
-     * @returns {Object} Serialized representation of the Product.
-     */
     serialize() {
         return {
             id: this.id,
             name: this.name,
             price: this.price,
             priceInCents: this.priceInCents,
-            photo: this.photo
+            photo: this.photo,
         };
     }
 }

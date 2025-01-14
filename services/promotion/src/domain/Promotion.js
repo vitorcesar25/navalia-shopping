@@ -1,3 +1,5 @@
+const { UnprocessableEntityError } = require('../../../shared/errors/CustomErrors');
+
 /**
  * Base class for all promotions.
  */
@@ -11,6 +13,11 @@ class Promotion {
      * @param {boolean} vipOnly - Whether the promotion is only for VIP customers.
      */
     constructor(id, name, type, vipOnly) {
+        
+        if (!id || !name || !type) {
+            throw new UnprocessableEntityError('Promotion ID, name, and type are required');
+        }
+
         this.id = id;
         this.name = name;
         this.type = type;
