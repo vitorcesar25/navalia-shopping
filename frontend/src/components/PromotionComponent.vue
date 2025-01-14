@@ -25,11 +25,11 @@
       </v-chip>
       <v-card-text>
         <p v-if="promotion.total !== promotion.subtotal">
-          <del class="grey--text">$ {{ promotion.total }}</del>
-          <strong class="ml-2 text-h6">$ {{ promotion.subtotal }}</strong>
+          <del class="grey--text">{{ formatNumberToDollar(promotion.total) }}</del>
+          <strong class="ml-2 text-h6">{{ formatNumberToDollar(promotion.subtotal) }}</strong>
         </p>
         <p v-else>
-          <strong>$ {{ promotion.subtotal }}</strong>
+          <strong>{{ formatNumberToDollar(promotion.subtotal) }}</strong>
         </p>
       </v-card-text>
     </v-card>
@@ -78,6 +78,12 @@ export default {
   methods: {
     ...mapMutations("promotion", ["togglePromotionLoading", "selectPromotion"]),
     ...mapActions("promotion", ["calculatePromotions"]),
+    formatNumberToDollar(value) {
+      return value.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      });
+    },
   },
   watch: {
     getCartItems: {

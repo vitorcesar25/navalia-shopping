@@ -29,7 +29,7 @@
                 <v-col cols="8">
                   <v-card-title>{{ item.name }}</v-card-title>
                   <v-card-subtitle>
-                    Unit Price: ${{ item.price.toFixed(2) }}
+                    Unit Price: {{ formatNumberToDollar(item.price) }}
                   </v-card-subtitle>
                   <v-card-subtitle>
                     Quantity: {{ item.quantity }}
@@ -74,7 +74,7 @@
             </v-card>
           </v-col>
           <v-col cols="12">
-            <p>Total: ${{ getCartTotal }}</p>
+            <p>Total: {{ formatNumberToDollar(getCartTotal) }}</p>
           </v-col>
         </v-row>
       </v-container>
@@ -134,6 +134,12 @@ export default {
       "clearCart",
       "continueFromCart",
     ]),
+    formatNumberToDollar(value) {
+      return value.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      });
+    },
     /**
      * Toggles the visibility of the cart dialog.
      */
