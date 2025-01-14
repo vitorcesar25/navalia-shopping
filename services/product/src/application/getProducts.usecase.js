@@ -43,8 +43,6 @@ const getProducts = async (limit = 10, startAfter = null) => {
  * @throws {NotFoundError} Throws an error if one or more product IDs are not found.
  */
 const fetchProductsByIds = async (productIds) => {
-    // TODO: Implement interface for caching
-
     const productData = await productRepository.fetchProductsByIds(productIds);
 
     const fetchedIds = productData.map((data) => data.id);
