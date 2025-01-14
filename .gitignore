@@ -70,3 +70,7 @@ node_modules/
 
 #package-lock
 */package-lock.json
+services/cart/package-lock.json
+services/product/package-lock.json
+services/promotion/package-lock.json
+services/shared/package-lock.json
