@@ -5,7 +5,7 @@ const Cart = require("../domain/Cart");
  * Fetches the cart data for a given user and enriches it with product metadata.
  *
  * @param {string} userId - The unique identifier of the user.
- * @param {Function} fetchProductMetadata - A function to fetch product metadata.
+ * @param {Function} getProductsMetadata - A function to fetch product metadata.
  * It should accept an array of product IDs and return metadata for those products.
  *
  * @return {Promise<Cart>} A class containing the enriched cart items and the total cost.

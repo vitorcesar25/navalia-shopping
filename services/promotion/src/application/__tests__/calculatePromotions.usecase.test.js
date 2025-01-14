@@ -1,7 +1,6 @@
 const {calculatePromotions} = require("../calculatePromotions.usecase");
 const promotionRepository = require("../../infrastructure/repositories/promotion.repository");
 const BuyXPayYPromotion = require("../../domain/BuyXPayYPromotion");
-const PercentagePromotion = require("../../domain/PercentagePromotion");
 const {BadRequestError} = require("../../../../shared/errors/CustomErrors");
 
 jest.mock("../../infrastructure/repositories/promotion.repository", () => ({

@@ -5,7 +5,7 @@ class BuyXPayYPromotion extends Promotion {
     constructor(id, name, vipOnly, customConfig) {
         super(id, name, 'buyXPayY', vipOnly);
 
-        if (!customConfig?.buy || !customConfig?.pay ||
+        if (!customConfig || !customConfig?.buy || !customConfig?.pay ||
             customConfig.buy <= 0 || customConfig.pay <= 0) {
             throw new UnprocessableEntityError(
                 'Buy and pay values are required for "Buy X Pay Y" promotions'
