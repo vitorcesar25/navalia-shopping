@@ -17,18 +17,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Adjust based on your Node.js version
+          node-version: '18'
 
       - name: Install dependencies
-        working-directory: ./frontend # Specify the frontend folder
+        working-directory: ./frontend
         run: npm install
 
       - name: Inject environment variables
-        working-directory: ./frontend # Specify the frontend folder
+        working-directory: ./frontend
         run: echo "VUE_APP_API_BASE_URL=${{ secrets.VUE_APP_API_BASE_URL }}" >> .env
 
       - name: Build application
-        working-directory: ./frontend # Specify the frontend folder
+        working-directory: ./frontend
         env:
           VUE_APP_API_BASE_URL: ${{ secrets.VUE_APP_API_BASE_URL }}
         run: npm run build
