@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-    baseURL: process.env.VUE_APP_API_BASE_URL || 'http://127.0.0.1:5001/navalia-shopping/us-central1/api',
+    baseURL: process.env.NODE_ENV === "development" ? 'http://127.0.0.1:5001/navalia-shopping/us-central1/api' : process.env.VUE_APP_API_BASE_URL,
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
