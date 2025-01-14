@@ -9,13 +9,13 @@
     <v-row>
       <v-col cols="12" md="4" v-for="product in products" :key="product.id">
         <v-card>
-          <v-img :src="product.photo" height="200px" class="align-end">
-            <v-card-subtitle class="white--text">
+          <v-img :src="product.photo" height="200px" class="align-end" cover>
+            <v-card-subtitle class="bg-white text-black">
               {{ product.name }}
             </v-card-subtitle>
           </v-img>
           <v-card-text>
-            <div class="text-h6">Price: {{ product.price.toFixed(2) }}</div>
+            <div class="text-h6">Price: ${{ product.price.toFixed(2) }}</div>
           </v-card-text>
           <v-card-actions>
             <v-btn
