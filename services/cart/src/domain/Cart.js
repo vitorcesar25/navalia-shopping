@@ -32,7 +32,6 @@ class Cart {
     constructor(userId, items = []) {
         this.#userId = userId;
         this.items = items.map((item) => new CartItem(item.productId, item.quantity));
-        this.calculateTotal();
     }
 
     /**
