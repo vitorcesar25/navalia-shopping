@@ -80,6 +80,7 @@
       </v-container>
       <div v-show="hasCartItems">
         <v-divider></v-divider>
+        <PromotionComponent />
         <v-divider></v-divider>
         <v-card-actions>
           <v-btn color="red" dark @click.stop="clearCart"> Clear Cart </v-btn>
@@ -95,9 +96,11 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import PromotionComponent from "./PromotionComponent.vue";
 export default {
   name: "CartComponent",
   components: {
+    PromotionComponent,
   },
   data() {
     return {};
