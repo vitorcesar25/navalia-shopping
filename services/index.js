@@ -26,6 +26,9 @@ app.use("/products", productRoutes);
 app.use("/carts", cartRoutes);
 app.use("/promotions", promotionRoutes);
 
-seedFirestore();
+
+if (process.env.FIRESTORE_EMULATOR_HOST) {
+  seedFirestore();
+}
 
 exports.api = functions.https.onRequest(app);
